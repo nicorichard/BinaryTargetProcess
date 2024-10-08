@@ -1,6 +1,6 @@
 import Foundation
 
-public struct BinaryTargetProxy {
+public struct BinaryTargetProcess {
     let artifactName: String
     let bundlePath: URL
     let targetTriple: String
@@ -31,7 +31,7 @@ public struct BinaryTargetProxy {
     }
 }
 
-extension BinaryTargetProxy {
+extension BinaryTargetProcess {
     public init(
         artifactName: String,
         targetName: String,
