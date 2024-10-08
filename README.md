@@ -10,7 +10,10 @@ An alternative for those wanting to move away from globally managed tooling (e.g
 
 1. Create a new package folder in your project which will serve to wrap the executable that you wish to use.
 
-> 💡 e.g Create a tooling package for your repository `mkdir SwiftTools && cd SwiftTools && swift package init --name SwiftTools --type executable`
+> 💡 e.g Create a tooling package for your repository
+> - `mkdir SwiftTools`
+> - `cd SwiftTools`
+> - `swift package init --name SwiftTools --type executable`
 
 2. Configure the binary target you wish to execute (`swiftlint-binary`), and an executable target (`swiftlint`) from which to do it.
 
