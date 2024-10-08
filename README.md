@@ -25,7 +25,7 @@ let package = Package(
     platforms: [.macOS(.v13)],
     products: [],
     dependencies: [
-        .package(url: "https://github.com/nicorichard/BinaryTargetProcess", branch: "main"),
+        .package(url: "https://github.com/nicorichard/BinaryTargetProcess", from: "1.0.0"),
     ],
     targets: [
         .executableTarget(
@@ -34,7 +34,7 @@ let package = Package(
         ),
         .binaryTarget(
             name: "swiftlint-binary",
-            url: "https://github.com/realm/SwiftLint/releases/download/0.57.0/SwiftLintBinary-macos.artifactbundle.zip", // You may self-host
+            url: "https://github.com/realm/SwiftLint/releases/download/0.57.0/SwiftLintBinary-macos.artifactbundle.zip", // Note: You may want to consider self-hosting your favourite artifacts
             checksum: "a1bbafe57538077f3abe4cfb004b0464dcd87e8c23611a2153c675574b858b3a"
         ),
     ]
