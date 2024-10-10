@@ -55,4 +55,10 @@ try BinaryTargetProcess(
 ).run()
 ```
 
-Now anyone on your team with swift on their machine can quickly invoke SwiftLint using `swift run --package-path SwiftTools swiftlint`.
+Now anyone on your team with swift on their machine can quickly invoke SwiftLint
+
+```
+swift run swiftlint
+```
+
+> Note: Use `--package-path SwiftTools` to run your tools from another directory
