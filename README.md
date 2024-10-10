@@ -50,8 +50,8 @@ let package = Package(
 import BinaryTargetProcess
 
 try BinaryTargetProcess(
-    artifactName: "swiftlint", // the name of the executable contained in the artifact bundle
-    bundleName: "SwiftLintBinary.artifactbundle" // the name of the artifactbundle (after unzipping)
+    artifactName: "swiftlint", // (optional) the name of the executable you wish to run from artifact bundle
+    bundleName: "SwiftLintBinary.artifactbundle" // the name of the artifactbundle after unzipping
 ).run()
 ```
 
