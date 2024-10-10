@@ -1,7 +1,7 @@
 import Foundation
 
 struct Runner {
-    let artifactName: String
+    let artifactName: String?
     let bundlePath: URL
     let targetTriple: TargetTriple
 

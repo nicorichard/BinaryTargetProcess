@@ -1,12 +1,12 @@
 import Foundation
 
 public struct BinaryTargetProcess {
-    let artifactName: String
+    let artifactName: String?
     let bundleName: String
     let fileManager: FileManager
 
     public init(
-        artifactName: String,
+        artifactName: String? = nil,
         bundleName: String,
         fileManager: FileManager = .default
     ) {
