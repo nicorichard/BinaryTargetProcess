@@ -40,7 +40,10 @@ extension BinaryTargetProcess {
     ) throws {
         self.init(
             artifactName: artifactName,
-            bundlePath: try findBundle(fileManager: fileManager, targetName: targetName, bundleName: bundleName),
+            bundlePath: try fileManager.findBundle(
+                targetName: targetName,
+                bundleName: bundleName
+            ),
             targetTriple: try TargetTriple().rawValue
         )
     }
