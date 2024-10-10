@@ -1,6 +1,6 @@
 import Foundation
 
-enum TargetTriple: String {
+enum TargetTriple: String, CustomStringConvertible {
     case x86_64_macos = "x86_64-apple-macosx"
     case arm64_macos = "arm64-apple-macosx"
     case x86_64_linux = "x86_64-unknown-linux-gnu"
@@ -18,5 +18,9 @@ enum TargetTriple: String {
         #else
             throw "unsupported architecture / OS"
         #endif
+    }
+
+    var description: String {
+        rawValue
     }
 }

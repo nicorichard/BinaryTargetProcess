@@ -1,18 +1,31 @@
 import Foundation
 
 extension FileManager {
-    func findBundle(targetName: String, bundleName: String) throws -> URL {
-        let artifactsPath = URL(fileURLWithPath: Bundle.main.bundlePath)
-            .appending(path: "../../artifacts")
+    private func findBundle(named bundleName: String, from startURL: URL) throws -> URL? {
+        let artifactDirectoryContents = try contentsOfDirectory(at: startURL, includingPropertiesForKeys: nil)
 
-        let artifactDirectoryContents = try subpathsOfDirectory(atPath: artifactsPath.relativePath)
-
-        for directory in artifactDirectoryContents {
-            if directory.hasSuffix("/\(targetName)/\(bundleName)") {
-                return artifactsPath.appending(path: directory)
+        for item in artifactDirectoryContents {
+            if item.lastPathComponent == bundleName {
+                return item
+            }
+            if item.hasDirectoryPath {
+                if let found = try findBundle(named: bundleName, from: item) {
+                    return found
+                }
             }
         }
 
-        throw "Could not find artifact bundle named \(bundleName)"
+        return nil
+    }
+
+    func findBundle(bundleName: String) throws -> URL {
+        let artifactsPath = URL(fileURLWithPath: Bundle.main.bundlePath)
+            .appending(path: "../../artifacts")
+
+        guard let bundle = try findBundle(named: bundleName, from: artifactsPath) else {
+            throw "Could not find artifact bundle named \(bundleName)"
+        }
+
+        return bundle
     }
 }

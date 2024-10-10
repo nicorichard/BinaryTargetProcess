@@ -51,7 +51,6 @@ import BinaryTargetProcess
 
 try BinaryTargetProcess(
     artifactName: "swiftlint", // the name of the executable contained in the artifact bundle
-    targetName: "swiftlint-binary", // the name of the `binaryTarget` you are fetching as dependency
     bundleName: "SwiftLintBinary.artifactbundle" // the name of the artifactbundle (after unzipping)
 ).run()
 ```
