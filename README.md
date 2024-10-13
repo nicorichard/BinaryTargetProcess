@@ -1,21 +1,23 @@
 # BinaryTargetProcess
 
-Include executable SPM artifact bundles in your repository, allowing them to be run by anyone on your team using `swift run` without any additional tools required.
+Include executable [Swift Package Manager (SPM) Artifact Bundles](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0305-swiftpm-binary-target-improvements.md#artifact-bundle) in your repository, allowing them to be `swift run` by anyone on your team — no additional tools required.
 
-By depending on pre-built executables the swift tool can be run quickly, without necessitating resolving additonal transitive dependencies and compilation.
+By depending on pre-built executables, the Swift tool can execute quickly without the need to resolve additional transitive dependencies or perform compilation.
 
-An alternative for those wanting to move away from globally managed tooling (e.g. Homebrew), but where Swift Plugins are inadequate.
+This provides an alternative for those looking to move away from globally managed tooling (e.g. Homebrew) but are not ready too meet the constraints of Swift Plugins.
 
 ## Usage
 
-1. Create a new package folder in your project which will serve to wrap the executable that you wish to use.
+1. **Create a new package folder** in your project to wrap the executable that you wish to use.
 
-> 💡 e.g Create a tooling package for your repository
-> - `mkdir SwiftTools`
-> - `cd SwiftTools`
-> - `swift package init --name SwiftTools --type executable`
+   > 💡 **Example**: Create a tooling package for your repository
+   > ```bash
+   > mkdir SwiftTools
+   > cd SwiftTools
+   > swift package init --name SwiftTools --type executable
+   > ```
 
-2. Configure the binary target you wish to execute (`swiftlint-binary`), and an executable target (`swiftlint`) from which to do it.
+2. **Configure the binary target** you wish to execute (e.g. `swiftlint-binary`), and an executable target (`swiftlint`) to run it.
 
 ```swift
 // swift-tools-version: 5.9
@@ -44,7 +46,7 @@ let package = Package(
 )
 ```
 
-3. Add a single source file to launch the binary executable and pass all arguments (`SwiftTools/Sources/swiftlint/main.swift`)
+3. **Add a source file** to launch the binary executable and pass all arguments (e.g. `SwiftTools/Sources/swiftlint/main.swift`)
 
 ```swift
 import BinaryTargetProcess
@@ -55,7 +57,7 @@ try BinaryTargetProcess(
 ).run()
 ```
 
-Now anyone on your team with swift on their machine can quickly invoke SwiftLint
+Now, anyone on your team with Swift installed can quickly and easily invoke SwiftLint:
 
 ```
 swift run swiftlint
