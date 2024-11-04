@@ -41,14 +41,15 @@ let package = Package(
         ),
         .binaryTarget(
             name: "swiftlint-binary",
-            url: "https://github.com/realm/SwiftLint/releases/download/0.57.0/SwiftLintBinary-macos.artifactbundle.zip", // Note: You may want to consider self-hosting your favourite artifacts
+            // n.b. You may want to consider self-hosting your team's artifacts
+            url: "https://github.com/realm/SwiftLint/releases/download/0.57.0/SwiftLintBinary-macos.artifactbundle.zip",
             checksum: "a1bbafe57538077f3abe4cfb004b0464dcd87e8c23611a2153c675574b858b3a"
         ),
     ]
 )
 ```
 
-3. **Add a source file** to launch the binary executable and pass all arguments (e.g. `SwiftTools/Sources/swiftlint/main.swift`)
+3. **Add a source file** and use BinaryTargetProcess to run the binary executable (e.g. `SwiftTools/Sources/swiftlint/main.swift`).
 
 ```swift
 import BinaryTargetProcess
@@ -61,7 +62,7 @@ let process = try BinaryTargetProcess(
 process.run()
 ```
 
-Now, anyone on your team with Swift installed can quickly and easily invoke SwiftLint:
+Now, anyone on your team with Swift installed can quickly and easily invoke a pre-compiled version of SwiftLint.
 
 ```
 swift run swiftlint
