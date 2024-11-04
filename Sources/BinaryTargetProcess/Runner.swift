@@ -5,24 +5,26 @@ struct Runner {
     let bundlePath: URL
     let targetTriple: TargetTriple
 
-    private func readArtifactBundleManifest() throws -> ArtifactBundleManifest {
-        let data = try Data(contentsOf: bundlePath.appending(path: ArtifactBundleManifest.infoPath))
+    private var artifactBundleManifestPath: URL {
+        bundlePath.appendingPathComponent(ArtifactBundleManifest.infoPath)
+    }
 
+    private func readArtifactBundleManifest() throws -> ArtifactBundleManifest {
+        let data = try Data(contentsOf: artifactBundleManifestPath)
         return try ArtifactBundleManifest.decode(from: data)
     }
 
-    private func findToolPath() throws -> URL {
-        let manifest = try readArtifactBundleManifest()
+    private func findToolPath(in manifest: ArtifactBundleManifest) throws -> URL {
         let path = try manifest.path(for: artifactName, targetTriple: targetTriple.rawValue)
-
         return bundlePath.appending(path: path)
     }
 
-    public func run() throws {
+    public func run(arguments: [String]) throws {
         let process = Process()
 
-        process.executableURL = try findToolPath()
-        process.arguments = Array(CommandLine.arguments.dropFirst())
+        let manifest = try readArtifactBundleManifest()
+        process.executableURL = try findToolPath(in: manifest)
+        process.arguments = arguments
 
         try process.run()
         process.waitUntilExit()

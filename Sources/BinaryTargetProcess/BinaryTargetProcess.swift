@@ -15,7 +15,9 @@ public struct BinaryTargetProcess {
         self.fileManager = fileManager
     }
 
-    public func run() throws {
+    public func run(
+        arguments: [String] = Array(CommandLine.arguments.dropFirst())
+    ) throws {
         let runner = Runner(
             artifactName: artifactName,
             bundlePath: try fileManager.findBundle(
@@ -24,6 +26,6 @@ public struct BinaryTargetProcess {
             targetTriple: try TargetTriple()
         )
 
-        try runner.run()
+        try runner.run(arguments: arguments)
     }
 }
