@@ -53,10 +53,12 @@ let package = Package(
 ```swift
 import BinaryTargetProcess
 
-try BinaryTargetProcess(
+let process = try BinaryTargetProcess(
     artifactName: "swiftlint", // (optional) the name of the executable to be run
     bundleName: "SwiftLintBinary.artifactbundle" // the name of the unzipped artifactbundle
-).run()
+)
+
+process.run()
 ```
 
 Now, anyone on your team with Swift installed can quickly and easily invoke SwiftLint:
