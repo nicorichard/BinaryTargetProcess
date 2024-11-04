@@ -20,7 +20,7 @@ This provides an alternative for those looking to move away from globally manage
 2. **Configure the binary target** you wish to execute (e.g. `swiftlint-binary`), and an executable target (`swiftlint`) to run it.
 
 ```swift
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -28,7 +28,9 @@ import PackageDescription
 let package = Package(
     name: "SwiftTools",
     platforms: [.macOS(.v13)],
-    products: [],
+    products: [
+        // Leave empty. This package can only be used with `swift run` and can not be distributed.
+    ],
     dependencies: [
         .package(url: "https://github.com/nicorichard/BinaryTargetProcess", from: "1.0.0"),
     ],
