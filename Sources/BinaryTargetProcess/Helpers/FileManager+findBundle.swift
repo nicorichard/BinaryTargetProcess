@@ -10,6 +10,9 @@ extension FileManager {
             if file.lastPathComponent == fileName {
                 return file
             }
+            if file.lastPathComponent == "__MACOSX" {
+                continue
+            }
             if file.hasDirectoryPath {
                 if let found = try findFile(named: fileName, startingAt: file) {
                     return found
