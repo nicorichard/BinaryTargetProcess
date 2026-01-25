@@ -42,7 +42,7 @@ extension FileManager {
             return xcodeArtifactsPath
         }
 
-        throw "Could not find artifacts directory"
+        throw BinaryTargetProcessError.artifactsDirectoryNotFound
     }
 
     /// Attempts to find the artifact bundle named `bundleName` from known artifact directory paths
@@ -52,7 +52,7 @@ extension FileManager {
         let artifactsPath = try findArtifactsPath()
 
         guard let bundle = try findFile(named: bundleName, startingAt: artifactsPath) else {
-            throw "Could not find artifact bundle named \(bundleName)"
+            throw BinaryTargetProcessError.bundleNotFound(name: bundleName)
         }
 
         return bundle

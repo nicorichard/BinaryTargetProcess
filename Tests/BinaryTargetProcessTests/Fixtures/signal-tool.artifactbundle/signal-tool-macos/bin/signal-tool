@@ -1,0 +1,5 @@
+#!/bin/bash
+trap 'exit 130' INT
+trap 'exit 143' TERM
+sleep ${1:-60}
+exit 0

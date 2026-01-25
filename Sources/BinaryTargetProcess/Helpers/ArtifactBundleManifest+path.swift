@@ -1,31 +1,39 @@
 extension ArtifactBundleManifest {
-    private func firstArtifactPath() throws -> ArtifactBundleManifest.Artifact {
+    private func firstArtifactPath() throws -> (name: String, artifact: ArtifactBundleManifest.Artifact) {
+        let availableKeys = Array(artifacts.keys).sorted()
+
         guard artifacts.count == 1 else {
-            throw "The artifact bundle contains multiple artifacts. Please specify `artifactName`."
+            throw BinaryTargetProcessError.ambiguousArtifact(available: availableKeys)
         }
 
-        guard let artifact = artifacts.first?.value else {
-            throw "Could not find any artifact."
+        guard let first = artifacts.first else {
+            throw BinaryTargetProcessError.noArtifactFound
         }
 
-        return artifact
+        return (first.key, first.value)
     }
 
-    private func artifactPath(named artifactName: String) throws -> ArtifactBundleManifest.Artifact {
+    private func artifactPath(named artifactName: String) throws -> (name: String, artifact: ArtifactBundleManifest.Artifact) {
         guard let artifact = artifacts[artifactName] else {
-            throw "Could not find an artifact named '\(artifactName)'"
+            let availableKeys = Array(artifacts.keys).sorted()
+            throw BinaryTargetProcessError.artifactNotFound(name: artifactName, available: availableKeys)
         }
 
-        return artifact
+        return (artifactName, artifact)
     }
 
     func path(for artifactName: String?, targetTriple: String) throws -> String {
-        let artifact = try artifactName.map(artifactPath(named:)) ?? firstArtifactPath()
+        let (resolvedName, artifact) = try artifactName.map { try artifactPath(named: $0) } ?? firstArtifactPath()
 
         guard let variant = artifact.variants.first(where: {
             $0.supportedTriples.contains(targetTriple)
         }) else {
-            throw "Could not find an exectuable variant for the target triple '\(targetTriple)'"
+            let availableTriples = artifact.variants.flatMap { $0.supportedTriples }.sorted()
+            throw BinaryTargetProcessError.noMatchingVariant(
+                artifactName: resolvedName,
+                targetTriple: targetTriple,
+                availableTriples: availableTriples
+            )
         }
 
         return variant.path

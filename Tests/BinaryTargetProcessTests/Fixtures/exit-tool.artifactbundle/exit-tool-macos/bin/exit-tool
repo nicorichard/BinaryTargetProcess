@@ -1,0 +1,3 @@
+#!/bin/bash
+# Exit with the code passed as the first argument, or 0 if not provided
+exit ${1:-0}

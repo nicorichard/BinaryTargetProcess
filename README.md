@@ -4,7 +4,7 @@ Include executable [Swift Package Manager (SPM) Artifact Bundles](https://github
 
 By depending on pre-built executables, the Swift tool can execute quickly without the need to resolve additional transitive dependencies or perform compilation.
 
-This provides an alternative for those looking to move away from globally managed tooling (e.g. Homebrew) but are not ready too meet the constraints of Swift Plugins.
+This provides an alternative for those looking to move away from globally managed tooling (e.g. Homebrew) but are not ready to meet the constraints of Swift Plugins.
 
 ## Usage
 
@@ -53,13 +53,16 @@ let package = Package(
 
 ```swift
 import BinaryTargetProcess
+import Foundation
 
-let process = try BinaryTargetProcess(
+let process = BinaryTargetProcess(
     artifactName: "swiftlint", // (optional) the name of the executable to be run
     bundleName: "SwiftLintBinary.artifactbundle" // the name of the unzipped artifactbundle
 )
 
-process.run()
+let result = try await process.run()
+
+exit(result.exitCode)
 ```
 
 Now, anyone on your team with Swift installed can quickly and easily invoke a pre-compiled version of SwiftLint.

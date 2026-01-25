@@ -1,0 +1,15 @@
+{
+    "schemaVersion": "1.0",
+    "artifacts": {
+        "signal-tool": {
+            "type": "executable",
+            "version": "1.0.0",
+            "variants": [
+                {
+                    "path": "signal-tool-macos/bin/signal-tool",
+                    "supportedTriples": ["x86_64-apple-macosx", "arm64-apple-macosx"]
+                }
+            ]
+        }
+    }
+}

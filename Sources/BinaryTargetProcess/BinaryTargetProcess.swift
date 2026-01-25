@@ -15,17 +15,28 @@ public struct BinaryTargetProcess {
         self.fileManager = fileManager
     }
 
+    @discardableResult
     public func run(
-        arguments: [String] = Array(CommandLine.arguments.dropFirst())
-    ) throws {
-        let runner = Runner(
+        arguments: [String] = Array(CommandLine.arguments.dropFirst()),
+        environment: [String: String]? = nil,
+        inheritEnvironment: Bool = true
+    ) async throws -> ProcessResult {
+        let executableURL = try ManifestReader(
             artifactName: artifactName,
             bundlePath: try fileManager.findBundle(
                 bundleName: bundleName
             ),
-            targetTriple: try TargetTriple()
+            targetTriple: try TargetTriple.current()
+        ).executableURL()
+
+        let runner = Runner(
+            executableURL: executableURL
         )
 
-        try runner.run(arguments: arguments)
+        return try await runner.run(
+            arguments: arguments,
+            environment: environment,
+            inheritEnvironment: inheritEnvironment
+        )
     }
 }
